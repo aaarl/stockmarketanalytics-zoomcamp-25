@@ -1,1 +1,68 @@
+paths:
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+  reports_dir: "reports"
+  figures_dir: "reports/figures"
+  backtests_dir: "reports/backtests"
+
+data:
+  main_file: "portfolio_data.csv"
+  meta_file: "symbols_valid_meta.csv"
+  date_col: "Date"
+  tickers: ["AMZN", "DPZ", "BTC", "NFLX"]
+
+target:
+  horizon: 1            # predict next-day return
+  definition: "log_return_h1"  # name of target column
+
+features:
+  basic:
+    - "return_1d"
+    - "log_return_1d"
+    - "vol_10"
+    - "vol_20"
+  technical:
+    - "sma_10"
+    - "sma_20"
+    - "ema_10"
+    - "ema_20"
+    - "rsi_14"
+    - "macd"
+    - "bb_upper_20"
+    - "bb_lower_20"
+  calendar:
+    - "dow"   # day of week
+    - "month"
+  interaction:
+    - "return_1d_x_rsi_14"
+
+split:
+  train_end: "2018-12-31"
+  val_end:   "2019-12-31"
+  test_end:  "2020-12-31"    # if data available, otherwise skip
+
+models:
+  baseline:
+    - "DecisionTreeClassifier"
+    - "RandomForestClassifier"
+  advanced:
+    - "XGBClassifier"
+
+simulation:
+  strategies:
+    - "long_only_threshold"
+    - "long_short_threshold"
+    - "long_only_sl_tp"
+  thresholds:
+    buy_prob: 0.6
+    short_prob: 0.6
+  risk:
+    stop_loss: -0.03
+    take_profit: 0.06
+  costs:
+    fee_bps: 5     # 5 basic points
+  capital:
+    initial: 10000
+    max_concurrent_positions: 3
 
