@@ -1,1 +1,9 @@
-
+data/
+reports/
+*.log
+*.pickle
+*.pkl
+*.joblib
+.env
+.ipynb_checkpoints/
+__pycache__/
