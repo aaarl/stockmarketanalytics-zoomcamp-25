@@ -1,1 +1,10 @@
-
+pandas
+numpy
+scikit-learn
+xgboost
+pandas-ta
+matplotlib
+plotly
+PyYAML
+joblib
+tqdm
