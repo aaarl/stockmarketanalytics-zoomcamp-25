@@ -28,7 +28,8 @@ def add_basic_features(df: pd.DataFrame, date_col: str = "Date") -> pd.DataFrame
     df["ret_1d"] = _groupwise_pct_change(df, "ticker", "price", 1)
     # Safe log: add small epsilon to avoid log(0) if needed
     eps = 1e-12
-    df["log_ret_1d"] = np.log(df["price"] / _groupwise_shift(df, "ticker", "price", 1) + eps)
+    df["log_ret_1d"] = np.log((df["price"] + eps) / (_groupwise_shift(df, "ticker", "price", 1) + eps))
+
 
     # 2) Lagged returns
     for p in [1, 2, 3, 5, 10]:
