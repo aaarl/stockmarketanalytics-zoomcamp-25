@@ -1,6 +1,4 @@
 from pathlib import Path
-import shutil
-
 
 def run(cfg: dict):
     raw_dir = Path(cfg["paths"]["raw_dir"])
